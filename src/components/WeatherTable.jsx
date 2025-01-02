@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const WeatherTable = ({ data, tempUnit, windUnit, toggleTempUnit, toggleWindUnit,  addFavorite, removeFavorites  }) => {
+const WeatherTable = ({ data, tempUnit, windUnit, toggleTempUnit, toggleWindUnit,  addFavorite, removeFavorite  }) => {
     const [isFavorite, setIsFavorite] = useState(false); // is fav state
 
     // get temp function
@@ -20,7 +20,7 @@ const WeatherTable = ({ data, tempUnit, windUnit, toggleTempUnit, toggleWindUnit
     // toggle fav function
     const handleFavoriteChange = () => {
         if (isFavorite) {
-            removeFavorites(data);
+            removeFavorite(data);
         } else {
             addFavorite(data);
         }
