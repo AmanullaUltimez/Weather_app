@@ -9,7 +9,7 @@ const FavoritesList = ({ favorites, removeFavorite, clearAllFavorites }) => {
         <div className="md:w-3/4 w-full bg-white md:p-4 p-2">
             {favorites.length > 0 ? (
                 <>
-                    <h2 className="font-bold text-3xl text-center underline mb-4 text-gray-700">My Favorites Cities</h2>
+                    <h2 className="font-bold text-xl text-center underline mb-4 text-gray-700">My Favorite's</h2>
                     <table className="min-w-full table-auto border-collapse">
                         <thead className="bg-gray-500 text-white">
                             <tr className="border-b">
@@ -41,13 +41,13 @@ const FavoritesList = ({ favorites, removeFavorite, clearAllFavorites }) => {
                     <button className='px-4 py-2 bg-red-500 text-white mt-4' onClick={clearAllFavorites}>Clear All</button>
                 </>
             ) : (
-                <p>No favorites available. Add some favorites cities! :)</p>
+                <p className='text-center'>No favorites available. Add some favorites cities! :)</p>
             )}
 
             {/* search navigation button */}
             <div className="mt-4 flex items-center justify-center">
                 <button
-                    onClick={() => navigate('/search')}
+                    onClick={() => navigate('/')}
                     className="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 ml-4"
                 >
                     Back to Search

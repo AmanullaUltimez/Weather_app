@@ -1,7 +1,6 @@
 import React from 'react';
 import WeatherTable from './WeatherTable';
 import SearchBar from './SearchBar';
-import { useNavigate } from 'react-router-dom'; 
 
 const SearchAndAdd = ({
   onSearch,
@@ -12,9 +11,10 @@ const SearchAndAdd = ({
   toggleWindUnit,
   addFavorite,
   removeFavorite,
-  errors
+  errors,
+  favorites,
+  clearAllFavorites
 }) => {
-  const navigate = useNavigate(); // for navigation
 
   return (
     <>
@@ -29,19 +29,10 @@ const SearchAndAdd = ({
           toggleWindUnit={toggleWindUnit}
           addFavorite={addFavorite}
           removeFavorite={removeFavorite}
+          favorites={favorites}
+          clearAllFavorites={clearAllFavorites}
         />
       )}
-      
-      {/* favorites navigation button */}
-      <div className="mt-4">
-        <button 
-          onClick={() => navigate('/')} 
-          className="bg-green-600 text-white p-2 rounded-lg hover:bg-green-700"
-        >
-          Back to Favorites
-        </button>
-       
-      </div>
     </>
   );
 };

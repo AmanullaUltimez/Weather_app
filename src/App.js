@@ -6,13 +6,14 @@ import Cookies from 'js-cookie';
 import { getFavorites, removeFavorites, clearFavorites, addFavoriate } from './utils/storage';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SearchAndAdd from './components/SearchAndAdd';
+import SideDash from './components/SideDash';
 
 function App() {
   const [weatherData, setWeatherData] = useState(null); // weather data state
-  const [tempUnit, setTempUnit] = useState("Celsius"); // twmprature unit
+  const [tempUnit, setTempUnit] = useState("Celsius"); // temperature unit
   const [windUnit, setWindUnit] = useState("km/h"); // wind speed unit
   const [errors, setErrors] = useState(""); // errors
-  const [favorites, setFavorites] = useState([]); // favoriates array
+  const [favorites, setFavorites] = useState([]); // favorites array
 
   // setting the units of temp and wind speed in cookies
   useEffect(() => {
@@ -22,7 +23,7 @@ function App() {
     if (storedTempUnit) setTempUnit(storedTempUnit);
     if (storedWindUnit) setWindUnit(storedWindUnit);
 
-    setFavorites(getFavorites()); 
+    setFavorites(getFavorites());
   }, []);
 
   // handle search function
@@ -34,10 +35,10 @@ function App() {
     } catch (error) {
       setWeatherData(null);
       setErrors(error.message);
-    } 
+    }
   };
 
-  // toggle temparature unit function
+  // toggle temperature unit function
   const toggleTempUnit = () => {
     const newTempUnit = tempUnit === "Celsius" ? "Fahrenheit" : "Celsius";
     setTempUnit(newTempUnit);
@@ -51,48 +52,64 @@ function App() {
     Cookies.set("windUnit", newWindUnit);
   };
 
-  // add to favorite function which take city name as arg
+  // add to favorite function which takes city name as argument
   const addFavorite = (cityData) => {
-    addFavoriate(cityData); 
-    setFavorites(getFavorites()); 
+    addFavoriate(cityData);
+    setFavorites(getFavorites());
   };
 
   // remove from favorites 
   const removeFavorite = (cityData) => {
-    removeFavorites(cityData); 
-    setFavorites(getFavorites()); 
+    removeFavorites(cityData);
+    setFavorites(getFavorites());
   };
 
   // removing all cities details from favorites
   const clearAllFavorites = () => {
     clearFavorites();
-    setFavorites([]); 
+    setFavorites([]);
   };
 
-  // used routing for 2 pages favorite (main) page and search page, and also passing some props to pages
+  // used routing for 2 pages: favorite (main) page and search page, and passing some props to pages
   return (
     <BrowserRouter>
-      <div className="flex justify-center items-center flex-col gap-4">
-        <h1 className="font-bold text-4xl underline mt-4">Weather Dashboard</h1>
-        <Routes>
-          <Route path="/" element={<FavoritesList
-            favorites={favorites}
-            removeFavorite={removeFavorite}
-            clearAllFavorites={clearAllFavorites}
-          />} />
-          <Route path="/search" element={
-            <SearchAndAdd
-              onSearch={handleSearch}
-              data={weatherData}
-              tempUnit={tempUnit}
-              windUnit={windUnit}
-              toggleTempUnit={toggleTempUnit}
-              toggleWindUnit={toggleWindUnit}
-              addFavorite={addFavorite}
-              removeFavorite={removeFavorite}
-              errors={errors}
-            />} />
-        </Routes>
+      <div className="flex w-full h-screen">
+        <SideDash className="w-1/3 p-4" /> 
+
+        <div className="p-4 flex flex-col items-center w-full"> 
+          <h1 className="font-bold text-4xl underline mt-4">Weather App</h1>
+
+          <Routes>
+            <Route
+              path="/favs"
+              element={
+                <FavoritesList
+                  favorites={favorites}
+                  removeFavorite={removeFavorite}
+                  clearAllFavorites={clearAllFavorites}
+                />
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <SearchAndAdd
+                  onSearch={handleSearch}
+                  data={weatherData}
+                  tempUnit={tempUnit}
+                  windUnit={windUnit}
+                  toggleTempUnit={toggleTempUnit}
+                  toggleWindUnit={toggleWindUnit}
+                  addFavorite={addFavorite}
+                  removeFavorite={removeFavorite}
+                  errors={errors}
+                  favorites={favorites}
+                  clearAllFavorites={clearAllFavorites}
+                />
+              }
+            />
+          </Routes>
+        </div>
       </div>
     </BrowserRouter>
   );
